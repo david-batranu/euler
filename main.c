@@ -549,6 +549,40 @@ long problem_14(int start){
 	return longest;
 }
 
+long Collatz(long n, long *arr){
+	/*fprintf(stdout, "%li\n", n);*/
+	if(!arr[n]){
+		if(n % 2 == 0){
+			arr[n] = Collatz(n/2, arr) + 1;
+		}
+		else{
+			arr[n] = Collatz(3*n + 1, arr) + 1;
+		}
+	}
+	/*fprintf(stdout, "%li\n", arr[n]);*/
+	return arr[n];
+}
+
+int problem_14_1(long start){
+	long *collatz = malloc((start*100+1) * sizeof(long));
+	collatz[1] = 1;
+
+	int i = 0;
+	for(i=start;i>1;i--){
+		Collatz(i, collatz);
+	}
+
+	int max = 0;
+	int e = 0;
+	for(i=start;i>1;i--){
+		if(collatz[i]>max){
+			max = collatz[i];
+			e = i;
+		}
+	}
+	return e;
+}
+
 /*
 void init_multi_array(long arr[20][20], int r, int c, int val){
 	int i, j;
@@ -761,10 +795,10 @@ int main(int argc, char *argv[]){
 	//fprintf(stdout, "The value of the first triangle number to have over five hundred divisors?: %li\n", problem_12());
 	//problem_13();
 	//fprintf(stdout, "Big sum: %s\n", problem_13());
-	//fprintf(stdout, "Number with longest chain: %li\n", problem_14(1000000));
+	fprintf(stdout, "Number with longest chain: %li\n", problem_14_1(1000000));
 	//fprintf(stdout, "Number of lattice paths: %li\n", problem_15());
 	//fprintf(stdout, "Sum: %i\n", problem_16());
 	//xxx();
-	fprintf(stdout, "Sum: %lu\n", problem_17(1000));
+	//fprintf(stdout, "Sum: %lu\n", problem_17(1000));
 	return 0;
 }
