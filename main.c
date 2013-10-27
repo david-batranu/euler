@@ -745,6 +745,63 @@ unsigned long problem_17(int target){
 }
 
 
+int problem_18(){
+	//static const int SIZE = 15;
+
+//	int arr[4][4] = {
+//			{3},
+//			{7, 4},
+//			{2, 4, 6},
+//			{8, 5, 9, 3},
+//	};
+
+	int arr[15][15] = {
+			{75},
+			{95, 64},
+			{17, 47, 82},
+			{18, 35, 87, 10},
+			{20,  4, 82, 47, 65},
+			{19,  1, 23, 75,  3, 34},
+			{88,  2, 77, 73,  7, 63, 67},
+			{99, 65,  4, 28,  6, 16, 70, 92},
+			{41, 41, 26, 56, 83, 40, 80, 70, 33},
+			{41, 48, 72, 33, 47, 32, 37, 16, 94, 29},
+			{53, 71, 44, 65, 25, 43, 91, 52, 97, 51, 14},
+			{70, 11, 33, 28, 77, 73, 17, 78, 39, 68, 17, 57},
+			{91, 71, 52, 38, 17, 14, 91, 43, 58, 50, 27, 29, 48},
+			{63, 66,  4, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31},
+			{04, 62, 98, 27, 23,  9, 70, 98, 73, 93, 38, 53, 60,  4, 23},
+	};
+
+
+	for (int row = 1; row < 15; row++){
+		for (int col = 0; col <= row; col++){
+			int current_value = arr[row][col];
+			int previous_value_1 = 0;
+			int previous_value_2 = 0;
+			int bigger = 0;
+			if(col == 0){
+				bigger = arr[row-1][col];
+			} else {
+				previous_value_1 = arr[row-1][col-1];
+				previous_value_2 = arr[row-1][col];
+				bigger = previous_value_1 > previous_value_2 ? previous_value_1 : previous_value_2;
+			}
+			arr[row][col] = current_value + bigger;
+			//fprintf(stdout, "%i : %i (%i | %i)\n", arr[row][col], bigger, previous_value_1, previous_value_2);
+		}
+		//fprintf(stdout, "\n");
+	}
+
+	int max_sum = 0;
+	for (int col = 0; col < 15; col++){
+		int value = arr[15-1][col];
+		max_sum = value > max_sum ? value : max_sum;
+	}
+	return max_sum;
+}
+
+
 int main(int argc, char *argv[]){
 	//fprintf(stdout, "Total for problem 1 is: %i\n", problem_1(1000));
 	//fprintf(stdout, "Total for problem 2 is: %i\n", problem_2(4000000));
@@ -765,6 +822,8 @@ int main(int argc, char *argv[]){
 	//fprintf(stdout, "Number of lattice paths: %li\n", problem_15());
 	//fprintf(stdout, "Sum: %i\n", problem_16());
 	//xxx();
-	fprintf(stdout, "Sum: %lu\n", problem_17(1000));
+	//fprintf(stdout, "Sum: %lu\n", problem_17(1000));
+	fprintf(stdout, "Sum: %i\n", problem_18());
 	return 0;
 }
+
